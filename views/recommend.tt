@@ -1,0 +1,24 @@
+[% WRAPPER header.tt %]
+<title>オススメ情報を登録</title>
+[% END # WRAPPER %]
+[% WRAPPER body.tt %]
+友達のオススメポイントを登録！<br>
+<img src="[% target.picture | html %]"><br>
+[% target.name | html %]<br>
+
+<form action="/register" method="post">
+<input type="hidden" name="fb_user_id" value="[% target.id | html %]">
+オススメポイント(一言で)<br>
+<input type="text" name="recommend"><br>
+[% IF error.err_recommend %][% error.err_recommend | html %][% END %]
+
+友達の連想タグ(カンマ区切りで)<br>
+<input type="text" name="user_tags"><br>
+[% IF error.err_user_tags %][% error.err_user_tags | html %][% END %]
+友達の好み連想タグ(カンマ区切りで)<br>
+<input type="text" name="user_fav_tags"><br>
+[% IF error.err_user_fav_tags %][% error.err_user_fav_tags | html %][% END %]
+<input type="submit" value="登録">
+</form>
+
+[% END # BODY %]

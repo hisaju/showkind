@@ -2,6 +2,6 @@
 <title>トップ</title>
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
-<a href="/login">Facebookログイン</a>
+トップページ
 
 [% END # BODY %]

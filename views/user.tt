@@ -1,0 +1,13 @@
+[% WRAPPER header.tt %]
+<title>オススメのお友達</title>
+[% END # WRAPPER %]
+[% WRAPPER body.tt %]
+
+<img src="[% target.picture | html %]"><br>
+[% target.name | html %]<br>
+
+[% user_tag_cloud %]
+
+[% user_fav_tag_clud %]
+
+[% END # BODY %]

@@ -1,0 +1,9 @@
+[% WRAPPER header.tt %]
+<title>オススメ情報登録完了</title>
+[% END # WRAPPER %]
+[% WRAPPER body.tt %]
+オススメ情報登録完了！<br>
+<img src="[% target.picture | html %]"><br>
+[% target.name | html %]さんのオススメ情報が登録されました。
+
+[% END # BODY %]

@@ -17,13 +17,31 @@ charset: "UTF-8"
 # template engine
 # simple: default and very basic template engine
 # template_toolkit: TT
+session: "YAML"
+session_dir: "../shared/dancer-sessions"
 
-template: "simple"
+template: "template_toolkit"
+engines:
+  template_toolkit:
+    encoding:  'utf8'
+    start_tag: '[%'
+    end_tag:   '%]'
 
-# template: "template_toolkit"
-# engines:
-#   template_toolkit:
-#     encoding:  'utf8'
-#     start_tag: '[%'
-#     end_tag:   '%]'
 
+plugins:
+  Facebook:
+    registration:
+      app_id: '424293317604624'
+      secret: '297d5a4e3aede2811b9d86621a9e995b'
+      postback: 'http://showkind.me:3000/postback'
+  Database:
+    driver: 'mysql'
+    database: 'showkind'
+    host: 'localhost'
+    port: '3306'
+    username: 'showkind_work'
+    password: 'showkind'
+  ValidateTiny:
+        rules_dir: validation
+        error_prefix: err_
+        is_full: 0

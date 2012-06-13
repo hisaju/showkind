@@ -1,0 +1,15 @@
+[% WRAPPER header.tt %]
+<title>オススメする友達を選択</title>
+[% END # WRAPPER %]
+[% WRAPPER body.tt %]
+オススメする友達を選択！<br>
+[% FOREACH f IN list %]
+<img src="[% f.pic_small | html %]">
+<a href="/recommend/[% f.uid | html %]">[% f.name | html %]</a>
+[% END %]
+
+[% IF pager.previous_page %]<a href="/choose/[% pager.previous_page %]">前へ</a>[% END %]
+
+[% IF pager.next_page %]<a href="/choose/[% pager.next_page %]">次へ</a>[% END %]
+
+[% END # BODY %]
