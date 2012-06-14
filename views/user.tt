@@ -3,11 +3,17 @@
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
 
-<img src="[% target.picture | html %]"><br>
+<img src="[% target.large_picture | html %]"><br>
 [% target.name | html %]<br>
 
-[% user_tag_cloud %]
+[% FOREACH rec IN recommends %]
+<img src="[% rec.user.small_picture %]">[% rec.recommend | html %]<br>
+[% END %]
 
-[% user_fav_tag_clud %]
+<br>
+[% user_tag %]
+
+<br>
+[% fav_tag %]
 
 [% END # BODY %]

@@ -6,6 +6,7 @@ use DateTime;
 use Data::Dumper;
 use Dancer::Plugin::ValidateTiny;
 use Data::Page;
+use HTML::TagCloud;
 
 our $VERSION = '0.1';
 
@@ -45,13 +46,16 @@ get '/postback' => sub {
     my $code = params->{'code'};
     fb->request_access_token($code);
     my $user = fb->fetch('me');
+    my $small = fb->picture($user->{id})->get_small->uri_as_string;
+    my $large = fb->picture($user->{id})->get_large->uri_as_string;
 
     my $db_user = database->quick_select('users', {fb_user_id => $user->{'id'}});
 
     if ($db_user) {
         database->quick_update('users', {id => $db_user->{id}}, {
             fb_access_token => fb->access_token,
-            picture => $user->{picture},
+            small_picture => $small,
+            large_picture => $large,
             name => $user->{name}
         });
     }
@@ -60,7 +64,8 @@ get '/postback' => sub {
         database->quick_insert('users', {
             fb_user_id => $user->{id},
             name => $user->{name},
-            picture => $user->{picture},
+            small_picture => $small,
+            large_picture => $large,
             fb_access_token => fb->access_token,
             created_at => $dt->strftime('%Y-%m-%d %H:%M:%S'),
         });
@@ -121,14 +126,17 @@ post '/register' => sub {
 
     my $user = session('fb_user');
     my $dt = DateTime->now( time_zone => 'Asia/Tokyo' );
-    my $target = fb->query->find(param('fb_user_id'))->select_fields(qw(id name gender picture))->request->as_hashref;
+    my $target = fb->query->find(param('fb_user_id'))->select_fields(qw(id name gender))->request->as_hashref;
 
     my $recommend_user = database->quick_select('recommend_users', {fb_user_id => $target->{'id'}});
     unless ($recommend_user) {
+        my $small = fb->picture($target->{id})->get_small->uri_as_string;
+        my $large = fb->picture($target->{id})->get_large->uri_as_string;
         database->quick_insert('recommend_users', {
             fb_user_id => $target->{id},
             name => $target->{name},
-            picture => $target->{picture},
+            small_picture => $small,
+            large_picture => $large,
             created_at => $dt->strftime('%Y-%m-%d %H:%M:%S'),
         });
         $recommend_user = database->quick_select('recommend_users', {fb_user_id => $target->{'id'}});
@@ -195,10 +203,35 @@ get '/complete/:id' => sub {
 };
 
 get '/user/:id' => sub {
+
     my $id = param('id');
     my $recommend_user = database->quick_select('recommend_users', {id => $id});
+    my @recs = database->quick_select('recommends', {recommend_user_id => $id});
+    my @recommends = ();
+    foreach my $rec (@recs) {
+        my $user = database->quick_select('users', {id => $rec->{user_id}});
+        $rec->{user} = $user;
+        push (@recommends, $rec);
+    }
 
-    template 'user', {target => $recommend_user};
+    my @user_tags = database->quick_select('user_tags', {recommend_user_id => $id});
+    my $user_tag = tags2html(\@user_tags);
+
+    my @fav_tags = database->quick_select('user_favorite_tags', {recommend_user_id => $id});
+    my $fav_tag = tags2html(\@fav_tags);
+
+    template 'user', {target => $recommend_user, recommends => \@recommends, user_tag => $user_tag, fav_tag => $fav_tag};
 };
+
+sub tags2html {
+    my ($tags) = @_;
+    my $cloud = HTML::TagCloud->new;
+
+    foreach my $tag (@$tags) {
+        $cloud->add_static($tag->{tag}, 1);
+    }
+
+    return $cloud->html_and_css(50);
+}
 
 true;
