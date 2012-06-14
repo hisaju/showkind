@@ -2,18 +2,31 @@
 <title>オススメのお友達</title>
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
+[% WRAPPER login.tt %]
 
-<img src="[% target.large_picture | html %]"><br>
-[% target.name | html %]<br>
-
+<div class="row">
+<div class="span10" style="text-align:center;">
+<h2>[% target.name | html %]さんのオススメ情報</h2>
+<div><img src="[% target.large_picture | html %]"></div>
+<br><br>
+<div class="row show-grid">
+<div class="span3">
 [% FOREACH rec IN recommends %]
-<img src="[% rec.user.small_picture %]">[% rec.recommend | html %]<br>
+<div class="float"><img src="[% rec.user.small_picture %]"></div>
+<div>[% rec.recommend | html %]</div>
 [% END %]
-
-<br>
+</div>
+<div class="span4">
+このユーザの連想タグ<br />
 [% user_tag %]
-
 <br>
+このユーザの好みのタイプ連想タグ<br>
 [% fav_tag %]
+<br>
+</div>
+</div>
+</div>
+</div>
 
+[% END %]
 [% END # BODY %]

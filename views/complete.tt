@@ -2,8 +2,11 @@
 <title>オススメ情報登録完了</title>
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
-オススメ情報登録完了！<br>
-<img src="[% target.picture | html %]"><br>
-[% target.name | html %]さんのオススメ情報が登録されました。
-
+[% WRAPPER login.tt %]
+<div class="row" >
+<h2>オススメ情報登録完了！</h2>
+<br />
+<div class="float"><img src="[% target.picture | html %]"></div>
+<div>[% target.name | html %]さんのオススメ情報が登録されました。</div>
+[% END %]
 [% END # BODY %]

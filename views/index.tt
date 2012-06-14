@@ -2,6 +2,15 @@
 <title>トップ</title>
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
-<a href="/login">Facebookログイン</a>
+[% WRAPPER nologin.tt %]
+<div class="row" id="lb_landing">
+  <div class="span8">
+        <h1>あの人の恋のキューピットになろう</h1>
+        <p>Show Kindは、facebook上の友達の為に恋人や友人の輪を広げてあげるサービスです。<br>
+            いい人なんだけど、なかなか出会いがない、そんなあの人をオススメしましょう。</p><br>
+        <a href="/login" class="fb_signin"></a><br />
+  </div>
+</div>
 
+[% END %]
 [% END # BODY %]

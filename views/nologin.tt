@@ -1,0 +1,5 @@
+[% INCLUDE nologin_head.tt %]
+<div class="container">
+[% content %]
+[% INCLUDE footer.tt %]
+</div>

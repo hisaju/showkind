@@ -33,14 +33,7 @@ plugins:
     registration:
       app_id: '424293317604624'
       secret: '297d5a4e3aede2811b9d86621a9e995b'
-      postback: 'http://showkind.me:3000/postback'
-  Database:
-    driver: 'mysql'
-    database: 'showkind'
-    host: 'localhost'
-    port: '3306'
-    username: 'showkind_work'
-    password: 'showkind'
+      postback: 'http://showkind.me/postback'
   ValidateTiny:
         rules_dir: validation
         error_prefix: err_

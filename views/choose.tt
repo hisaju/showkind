@@ -2,14 +2,23 @@
 <title>オススメする友達を選択</title>
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
-オススメする友達を選択！<br>
+[% WRAPPER login.tt %]
+<div class="row" >
+<h2>オススメする友達を選択！</h2>
+<br>
 [% FOREACH f IN list %]
-<img src="[% f.pic_small | html %]">
-<a href="/recommend/[% f.uid | html %]">[% f.name | html %]</a>
+<div class="span3">
+<div class="float"><img src="[% f.pic_small | html %]"></div>
+<div><a href="/recommend/[% f.uid | html %]">[% f.name | html %]</a></div>
+<br class="floatclear">
+</div>
 [% END %]
+
 
 [% IF pager.previous_page %]<a href="/choose/[% pager.previous_page %]">前へ</a>[% END %]
 
 [% IF pager.next_page %]<a href="/choose/[% pager.next_page %]">次へ</a>[% END %]
+</div>
 
+[% END %]
 [% END # BODY %]

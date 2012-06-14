@@ -1,0 +1,5 @@
+[% INCLUDE login_head.tt %]
+<div class="container">
+[% content %]
+</div>
+[% INCLUDE footer.tt %]

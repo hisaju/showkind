@@ -2,6 +2,7 @@
 <title>トップ</title>
 [% END # WRAPPER %]
 [% WRAPPER body.tt %]
-トップページ
-
+[% WRAPPER login.tt %]
+現在絶賛開発中！！
+[% END %]
 [% END # BODY %]
