@@ -16,6 +16,7 @@ before sub {
      and not request->path =~/^\/postback/
         and not session('fb_user') )
     {
+    session ('before', request->path);
     redirect uri_for('/');
     }
 };
@@ -73,6 +74,10 @@ get '/postback' => sub {
         session 'first', '1';
     }
     session 'fb_user', $db_user;
+
+    if (session 'before') {
+        return redirect uri_for(session 'before');
+    }
     redirect uri_for('/');
 };
 
